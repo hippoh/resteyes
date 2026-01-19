@@ -1,0 +1,169 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f7fb;
+  color: #1b1f2a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 16px;
+}
+
+.page {
+  width: min(960px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero h1 {
+  margin-bottom: 8px;
+  font-size: 2.2rem;
+}
+
+.panel {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 27, 59, 0.08);
+}
+
+.field-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 200px;
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfd6e6;
+  font-size: 1rem;
+}
+
+.time-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.primary {
+  width: 100%;
+  border: none;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #5f6bff, #7f6fff);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary:hover {
+  opacity: 0.95;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.ghost {
+  border: 1px solid #cfd6e6;
+  background: #f8f9ff;
+  color: #364152;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.ghost:hover {
+  background: #eef1ff;
+}
+
+.status-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 1.2rem;
+}
+
+#phase-label {
+  font-weight: 700;
+  color: #5f6bff;
+}
+
+#countdown {
+  font-size: 2rem;
+}
+
+.hint {
+  margin: 0;
+  color: #6b7280;
+}
+
+.progress {
+  height: 12px;
+  background: #e6e9f2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #5f6bff, #4cc9f0);
+  transition: width 0.4s ease;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+@media (max-width: 720px) {
+  .status {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #countdown {
+    font-size: 1.6rem;
+  }
+}
