@@ -15,7 +15,6 @@ const timeWindow = document.getElementById("time-window");
 
 let timerId = null;
 let schedule = null;
-let audioContext = null;
 
 const pad = (value) => value.toString().padStart(2, "0");
 
@@ -79,31 +78,6 @@ const resetTimer = () => {
   schedule = null;
 };
 
-const getAudioContext = () => {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  return audioContext;
-};
-
-const beepThreeTimes = () => {
-  const context = getAudioContext();
-  const startAt = context.currentTime;
-  for (let i = 0; i < 3; i += 1) {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = 880;
-    gain.gain.setValueAtTime(0.0001, startAt + i * 0.35);
-    gain.gain.exponentialRampToValueAtTime(0.3, startAt + i * 0.35 + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, startAt + i * 0.35 + 0.2);
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start(startAt + i * 0.35);
-    oscillator.stop(startAt + i * 0.35 + 0.22);
-  }
-};
-
 const updateProgress = (now, startTime, endTime) => {
   const total = endTime - startTime;
   const elapsed = Math.min(Math.max(now - startTime, 0), total);
@@ -124,10 +98,6 @@ const runTick = () => {
     phaseLabel.textContent = "已结束";
     countdownEl.textContent = "00:00:00";
     hintEl.textContent = "本次计时已经结束。";
-    if (!schedule.hasEnded) {
-      beepThreeTimes();
-      schedule.hasEnded = true;
-    }
     resetTimer();
     return;
   }
@@ -148,20 +118,14 @@ const runTick = () => {
     phaseStart = new Date(startTime);
     phaseEnd = new Date(startTime.getTime() + workMinutes * 60 * 1000);
     phaseType = "work";
-    if (!schedule.hasStarted) {
-      beepThreeTimes();
-      schedule.hasStarted = true;
-    }
   }
 
   while (now >= phaseEnd) {
     phaseStart = new Date(phaseEnd);
     if (phaseType === "work") {
-      beepThreeTimes();
       phaseType = "rest";
       phaseEnd = new Date(phaseStart.getTime() + restMinutes * 60 * 1000);
     } else {
-      beepThreeTimes();
       phaseType = "work";
       phaseEnd = new Date(phaseStart.getTime() + workMinutes * 60 * 1000);
     }
