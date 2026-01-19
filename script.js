@@ -102,15 +102,9 @@ const getAudioContext = () => {
   return audioContext;
 };
 
-const ensureAudioReady = () => {
+const beepThreeTimes = () => {
   const context = getAudioContext();
-  if (context.state === "suspended") {
-    context.resume();
-  }
-};
-
-const playBeeps = (context) => {
-  const startAt = context.currentTime + 0.05;
+  const startAt = context.currentTime;
   for (let i = 0; i < 3; i += 1) {
     const oscillator = context.createOscillator();
     const gain = context.createGain();
@@ -124,15 +118,6 @@ const playBeeps = (context) => {
     oscillator.start(startAt + i * 0.35);
     oscillator.stop(startAt + i * 0.35 + 0.22);
   }
-};
-
-const beepThreeTimes = () => {
-  const context = getAudioContext();
-  if (context.state === "suspended") {
-    context.resume().then(() => playBeeps(context));
-    return;
-  }
-  playBeeps(context);
 };
 
 const updateProgress = (now, startTime, endTime) => {
@@ -161,6 +146,7 @@ const runTick = () => {
     }
     resetTimer();
     setIdleState();
+    resetTimer();
     return;
   }
 
@@ -194,6 +180,9 @@ const runTick = () => {
       phaseEnd = new Date(phaseStart.getTime() + restMinutes * 60 * 1000);
     } else {
       beepThreeTimes();
+      phaseType = "rest";
+      phaseEnd = new Date(phaseStart.getTime() + restMinutes * 60 * 1000);
+    } else {
       phaseType = "work";
       phaseEnd = new Date(phaseStart.getTime() + workMinutes * 60 * 1000);
     }
@@ -219,7 +208,6 @@ const runTick = () => {
 
 startButton.addEventListener("click", () => {
   resetTimer();
-  ensureAudioReady();
   schedule = createSchedule();
   runTick();
   timerId = setInterval(runTick, 1000);
@@ -233,7 +221,6 @@ resetButton.addEventListener("click", () => {
 pauseButton.addEventListener("click", () => {
   if (!schedule) return;
   if (isPaused) {
-    ensureAudioReady();
     const now = new Date();
     const delta = now - pausedAt;
     schedule.startTime = new Date(schedule.startTime.getTime() + delta);
