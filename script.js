@@ -146,6 +146,7 @@ const runTick = () => {
     }
     resetTimer();
     setIdleState();
+    resetTimer();
     return;
   }
 
@@ -179,6 +180,9 @@ const runTick = () => {
       phaseEnd = new Date(phaseStart.getTime() + restMinutes * 60 * 1000);
     } else {
       beepThreeTimes();
+      phaseType = "rest";
+      phaseEnd = new Date(phaseStart.getTime() + restMinutes * 60 * 1000);
+    } else {
       phaseType = "work";
       phaseEnd = new Date(phaseStart.getTime() + workMinutes * 60 * 1000);
     }
