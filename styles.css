@@ -86,6 +86,27 @@ body {
   opacity: 0.95;
 }
 
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.ghost {
+  border: 1px solid #cfd6e6;
+  background: #f8f9ff;
+  color: #364152;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.ghost:hover {
+  background: #eef1ff;
+}
+
 .status-panel {
   display: flex;
   flex-direction: column;
