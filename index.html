@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>护眼工作计时器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <h1>护眼工作计时器</h1>
+        <p>设定起止时间，交替工作与休息。</p>
+      </header>
+
+      <section class="panel">
+        <div class="field-group">
+          <label class="field">
+            <span>开始时间</span>
+            <div class="time-select">
+              <select id="start-hour" aria-label="开始小时"></select>
+              <span>:</span>
+              <select id="start-minute" aria-label="开始分钟"></select>
+            </div>
+          </label>
+          <label class="field">
+            <span>结束时间</span>
+            <div class="time-select">
+              <select id="end-hour" aria-label="结束小时"></select>
+              <span>:</span>
+              <select id="end-minute" aria-label="结束分钟"></select>
+            </div>
+          </label>
+        </div>
+
+        <div class="field-group">
+          <label class="field">
+            <span>工作时段（分钟）</span>
+            <input id="work-duration" type="number" min="1" value="30" />
+          </label>
+          <label class="field">
+            <span>休息时段（分钟）</span>
+            <input id="rest-duration" type="number" min="1" value="3" />
+          </label>
+        </div>
+
+        <button id="start-button" class="primary">启动计时</button>
+      </section>
+
+      <section class="panel status-panel">
+        <div class="status">
+          <span id="phase-label">尚未开始</span>
+          <strong id="countdown">--:--:--</strong>
+        </div>
+        <p id="hint" class="hint">请先设置时间并启动。</p>
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progress-text">进度：0%</span>
+          <span id="time-window">--</span>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
